@@ -1,2 +1,2 @@
 # Simple-Database-Challenge
-Java bosed solution for Simple Database Challenge
+Java based solution for https://www.thumbtack.com/challenges/simple-database#performance
