@@ -12,7 +12,7 @@ public class TransactionBlocks {
 	 */
 
 	Stack<UnitTransaction> transactionBlocks = new Stack<UnitTransaction>();
-	private boolean hasBegan = false;
+	public boolean hasBegan = false;
 
 	/**
 	 * Begin - Open a new transaction block. Transaction blocks can be nested; a BEGIN can be issued inside of an existing block.
@@ -22,7 +22,7 @@ public class TransactionBlocks {
 	public UnitTransaction begin (UnitTransaction unitTransaction) {
 		transactionBlocks.push(unitTransaction);
 		hasBegan = true;
-		return unitTransaction;
+		return new UnitTransaction(unitTransaction);
 	}
 
 	/**
@@ -35,12 +35,11 @@ public class TransactionBlocks {
 			System.err.println("Could not rollback with out begin, no transaction exists");
 			return unitTransaction;
 		}
-
 		if (!transactionBlocks.empty()) {
-			transactionBlocks.pop();
-			UnitTransaction curTransaction = transactionBlocks.peek();
-			if (transactionBlocks.empty()) hasBegan = false;
-			return curTransaction;
+			UnitTransaction lastCommitted = transactionBlocks.pop();
+			if (transactionBlocks.isEmpty())
+				hasBegan = false;
+			return lastCommitted;
 		} else {
 			System.out.println("NO TRANSACTION");
 			return unitTransaction;
@@ -58,9 +57,8 @@ public class TransactionBlocks {
 			return unitTransaction;
 		}
 		if (!transactionBlocks.empty()) {
-			UnitTransaction newestTransaction = transactionBlocks.peek();
 			transactionBlocks.clear();
-			return newestTransaction;
+			return unitTransaction;
 		} else {
 			System.out.println("NO TRANSACTION");
 			return unitTransaction;

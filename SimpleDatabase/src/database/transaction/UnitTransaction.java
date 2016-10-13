@@ -8,13 +8,18 @@ import java.util.HashMap;
 
 public class UnitTransaction {
 
-	private HashMap<String, Integer> name_value; 
-	private HashMap<Integer, Integer> value_count;
+	public HashMap<String, Integer> name_value; 
+	public HashMap<Integer, Integer> value_count;
 
 	public UnitTransaction() {
 		name_value = new HashMap<String, Integer>();
 		value_count = new HashMap<Integer, Integer>();
 	}
+
+	public UnitTransaction(UnitTransaction unitTransaction) {
+		this.name_value = new HashMap<String, Integer>(unitTransaction.getNameValue());
+		this.value_count = new HashMap<Integer, Integer>(unitTransaction.getValueCount());
+	}	
 	/**
 	 * SET:  Update name_value, set variable name to value in name_value and update value_count accourdingly
 	 *
@@ -100,6 +105,27 @@ public class UnitTransaction {
 		}
 	}
 
+	public HashMap<String, Integer> getNameValue() {
+		return name_value;
+	}
+
+	public HashMap<Integer, Integer> getValueCount() {
+		return value_count;
+	}
+
+	// public boolean equals(UnitTransaction unitTransaction) {
+	// 	if (this.name_value.keySet().size() == unitTransaction.getNameValue().keySet().size()) {
+	// 		for (String name : this.name_value.keySet()) {
+	// 			if (unitTransaction.getNameValue().containsKey(name)
+	// 					&& unitTransaction.getNameValue().get(name) == this.name_value.get(name))
+	// 				continue;
+	// 			else
+	// 				return false;
+	// 		}
+	// 	} else
+	// 		return false;
+	// 	return true;
+	// }
 
 
 }
